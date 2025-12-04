@@ -1,0 +1,35 @@
+# Dependencies
+/vendor/
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs and cache
+storage/logs/*
+!storage/logs/.gitkeep
+storage/rate_limits/*
+!storage/rate_limits/.gitkeep
+.phpunit.cache/
+
+# Uploads (keep structure, ignore files)
+storage/uploads/cars/*
+!storage/uploads/cars/.gitkeep
+
+# Compiled files
+*.log
+*.cache
+
+# Testing
+.phpunit.result.cache
+coverage/

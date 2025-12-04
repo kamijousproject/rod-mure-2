@@ -1,0 +1,34 @@
+{
+    "name": "usedcar/marketplace",
+    "description": "Used Car Marketplace - Lightweight PHP MVC",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Helpers/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=8.1",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "scripts": {
+        "test": "phpunit --configuration phpunit.xml",
+        "migrate": "php migrations/migrate.php",
+        "seed": "php seeds/seed.php"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
