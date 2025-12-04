@@ -3,7 +3,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/">หน้าแรก</a></li>
+                <li class="breadcrumb-item"><a href="<?= url('/') ?>">หน้าแรก</a></li>
                 <li class="breadcrumb-item active">ค้นหารถ</li>
             </ol>
         </nav>
@@ -17,7 +17,7 @@
             <div class="filter-sidebar shadow-sm">
                 <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>กรองผลลัพธ์</h5>
                 
-                <form action="/cars" method="GET" id="filter-form">
+                <form action="<?= url('/cars') ?>" method="GET" id="filter-form">
                     <!-- Search -->
                     <div class="mb-3">
                         <label class="form-label">คำค้นหา</label>
@@ -123,7 +123,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-search me-2"></i>ค้นหา
                         </button>
-                        <a href="/cars" class="btn btn-outline-secondary">ล้างตัวกรอง</a>
+                        <a href="<?= url('/cars') ?>" class="btn btn-outline-secondary">ล้างตัวกรอง</a>
                     </div>
                 </form>
             </div>
@@ -153,7 +153,7 @@
                     <i class="bi bi-car-front display-1 text-muted"></i>
                     <h4 class="mt-3">ไม่พบรถที่ค้นหา</h4>
                     <p class="text-muted">ลองปรับเงื่อนไขการค้นหาใหม่</p>
-                    <a href="/cars" class="btn btn-primary">ดูรถทั้งหมด</a>
+                    <a href="<?= url('/cars') ?>" class="btn btn-primary">ดูรถทั้งหมด</a>
                 </div>
             <?php else: ?>
                 <!-- Car Grid -->
@@ -207,7 +207,7 @@ document.getElementById('brand-select').addEventListener('change', async functio
     modelSelect.innerHTML = '<option value="">ทั้งหมด</option>';
     
     if (brandId) {
-        const response = await fetch('/api/models?brand_id=' + brandId);
+        const response = await fetch('<?= url('/api/models') ?>?brand_id=' + brandId);
         const data = await response.json();
         
         if (data.success) {

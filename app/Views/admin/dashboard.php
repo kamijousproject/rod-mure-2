@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-primary border-0 opacity-75">
-                    <a href="/admin/cars" class="text-white text-decoration-none small">
+                    <a href="<?= url('/admin/cars') ?>" class="text-white text-decoration-none small">
                         ดูทั้งหมด <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-warning border-0 opacity-75">
-                    <a href="/admin/cars?status=pending" class="text-dark text-decoration-none small">
+                    <a href="<?= url('/admin/cars?status=pending') ?>" class="text-dark text-decoration-none small">
                         ตรวจสอบ <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-success border-0 opacity-75">
-                    <a href="/admin/users" class="text-white text-decoration-none small">
+                    <a href="<?= url('/admin/users') ?>" class="text-white text-decoration-none small">
                         จัดการผู้ใช้ <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -86,7 +86,7 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">ประกาศล่าสุด</h5>
-                    <a href="/admin/cars" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
+                    <a href="<?= url('/admin/cars') ?>" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -120,7 +120,7 @@
                                     </td>
                                     <td><small><?= format_date($car['created_at'], 'd M') ?></small></td>
                                     <td>
-                                        <a href="/admin/cars/<?= $car['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                        <a href="<?= url('/admin/cars/' . $car['id']) ?>" class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
@@ -160,22 +160,22 @@
                     <h5 class="mb-0">เมนูด่วน</h5>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="/admin/cars?status=pending" class="list-group-item list-group-item-action">
+                    <a href="<?= url('/admin/cars?status=pending') ?>" class="list-group-item list-group-item-action">
                         <i class="bi bi-clock-history me-2 text-warning"></i>ตรวจสอบประกาศ
                         <?php if (($carStats['pending'] ?? 0) > 0): ?>
                             <span class="badge bg-warning float-end"><?= $carStats['pending'] ?></span>
                         <?php endif; ?>
                     </a>
-                    <a href="/admin/brands" class="list-group-item list-group-item-action">
+                    <a href="<?= url('/admin/brands') ?>" class="list-group-item list-group-item-action">
                         <i class="bi bi-building me-2 text-primary"></i>จัดการยี่ห้อ
                     </a>
-                    <a href="/admin/models" class="list-group-item list-group-item-action">
+                    <a href="<?= url('/admin/models') ?>" class="list-group-item list-group-item-action">
                         <i class="bi bi-car-front me-2 text-primary"></i>จัดการรุ่น
                     </a>
-                    <a href="/admin/reports" class="list-group-item list-group-item-action">
+                    <a href="<?= url('/admin/reports') ?>" class="list-group-item list-group-item-action">
                         <i class="bi bi-graph-up me-2 text-success"></i>รายงาน
                     </a>
-                    <a href="/admin/reports/export?type=cars" class="list-group-item list-group-item-action">
+                    <a href="<?= url('/admin/reports/export?type=cars') ?>" class="list-group-item list-group-item-action">
                         <i class="bi bi-download me-2 text-info"></i>Export CSV
                     </a>
                 </div>

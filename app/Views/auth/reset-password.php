@@ -11,7 +11,7 @@
                     
                     <?php $errors = \App\Core\Session::getErrors(); ?>
                     
-                    <form action="/reset-password" method="POST">
+                    <form action="<?= url('/reset-password') ?>" method="POST">
                         <?= csrf_field() ?>
                         <input type="hidden" name="token" value="<?= e($token) ?>">
                         

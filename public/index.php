@@ -65,6 +65,34 @@ if (str_starts_with($uri, $basePath)) {
     $uri = substr($uri, strlen($basePath)) ?: '/';
 }
 
+// Handle storage file requests directly
+if (str_starts_with($uri, '/storage/')) {
+    $path = substr($uri, 9); // Remove '/storage/'
+    $path = str_replace(['..', '\\'], ['', '/'], $path); // Sanitize
+    $filePath = BASE_PATH . '/storage/uploads/' . $path;
+    
+    if (file_exists($filePath) && is_file($filePath)) {
+        $mimeTypes = [
+            'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg',
+            'png' => 'image/png', 'gif' => 'image/gif',
+            'webp' => 'image/webp', 'svg' => 'image/svg+xml',
+            'pdf' => 'application/pdf',
+        ];
+        $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+        $mime = $mimeTypes[$ext] ?? 'application/octet-stream';
+        
+        header('Content-Type: ' . $mime);
+        header('Content-Length: ' . filesize($filePath));
+        header('Cache-Control: public, max-age=31536000');
+        readfile($filePath);
+        exit;
+    }
+    
+    http_response_code(404);
+    echo 'File not found';
+    exit;
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Handle request

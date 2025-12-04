@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">แดชบอร์ด</h2>
         <?php if (in_array($user['role'], ['seller', 'admin'])): ?>
-            <a href="/my-cars/create" class="btn btn-primary">
+            <a href="<?= url('/my-cars/create') ?>" class="btn btn-primary">
                 <i class="bi bi-plus-lg me-2"></i>ลงประกาศขายรถ
             </a>
         <?php endif; ?>
@@ -99,7 +99,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
             <h5 class="mb-0">รถของฉัน</h5>
-            <a href="/my-cars" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
+            <a href="<?= url('/my-cars') ?>" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -120,7 +120,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <?php if ($car['primary_image']): ?>
-                                        <img src="<?= upload_url('cars/' . $car['primary_image']) ?>" 
+                                        <img src="<?= upload_url($car['primary_image']) ?>" 
                                              class="rounded me-2" style="width: 50px; height: 40px; object-fit: cover;">
                                     <?php endif; ?>
                                     <div>
@@ -144,7 +144,7 @@
                             <td><?= number_format($car['views']) ?></td>
                             <td><?= number_format($car['inquiry_count'] ?? 0) ?></td>
                             <td>
-                                <a href="/my-cars/<?= $car['id'] ?>/edit" class="btn btn-sm btn-outline-primary">
+                                <a href="<?= url('/my-cars/' . $car['id'] . '/edit') ?>" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             </td>
@@ -167,7 +167,7 @@
                     <span class="badge bg-danger"><?= $unreadInquiries ?> ใหม่</span>
                 <?php endif; ?>
             </h5>
-            <a href="/inquiries" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
+            <a href="<?= url('/inquiries') ?>" class="btn btn-sm btn-outline-primary">ดูทั้งหมด</a>
         </div>
         <div class="card-body">
             <?php if (empty($recentInquiries)): ?>
@@ -175,7 +175,7 @@
             <?php else: ?>
                 <div class="list-group list-group-flush">
                     <?php foreach ($recentInquiries as $inquiry): ?>
-                    <a href="/inquiries/<?= $inquiry['id'] ?>" class="list-group-item list-group-item-action <?= $inquiry['status'] === 'unread' ? 'bg-light' : '' ?>">
+                    <a href="<?= url('/inquiries/' . $inquiry['id']) ?>" class="list-group-item list-group-item-action <?= $inquiry['status'] === 'unread' ? 'bg-light' : '' ?>">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <strong><?= e($inquiry['name']) ?></strong>

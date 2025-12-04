@@ -15,7 +15,7 @@
                             default => '<span class="badge bg-secondary">ผู้ซื้อ</span>'
                         } ?>
                     </p>
-                    <a href="/profile/edit" class="btn btn-outline-primary">
+                    <a href="<?= url('/profile/edit') ?>" class="btn btn-outline-primary">
                         <i class="bi bi-pencil me-2"></i>แก้ไขโปรไฟล์
                     </a>
                 </div>

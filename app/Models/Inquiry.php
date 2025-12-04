@@ -56,7 +56,53 @@ class Inquiry extends BaseModel
     }
     
     /**
-     * Get inquiries for seller
+     * Get inquiries for user (both sent and received)
+     */
+    public static function getForUser(int $userId, ?string $status = null, int $page = 1, int $perPage = 20): array
+    {
+        $conditions = ["(i.receiver_id = ? OR i.sender_id = ?)"];
+        $params = [$userId, $userId];
+        
+        if ($status) {
+            $conditions[] = "i.status = ?";
+            $params[] = $status;
+        }
+        
+        $whereClause = implode(' AND ', $conditions);
+        
+        // Count
+        $countParams = $params;
+        $total = (int)(Database::fetch(
+            "SELECT COUNT(*) as total FROM inquiries i WHERE {$whereClause}",
+            $countParams
+        )['total'] ?? 0);
+        
+        // Get inquiries
+        $offset = ($page - 1) * $perPage;
+        $inquiries = Database::fetchAll(
+            "SELECT i.*, 
+                    c.title as car_title,
+                    c.slug as car_slug,
+                    (SELECT image_path FROM car_images WHERE car_id = c.id ORDER BY is_primary DESC, id ASC LIMIT 1) as car_image
+             FROM inquiries i
+             LEFT JOIN cars c ON c.id = i.car_id
+             WHERE {$whereClause}
+             ORDER BY i.created_at DESC
+             LIMIT {$perPage} OFFSET {$offset}",
+            $params
+        );
+        
+        return [
+            'items' => $inquiries,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+            'total_pages' => (int)ceil($total / $perPage),
+        ];
+    }
+    
+    /**
+     * Get inquiries for seller (received only)
      */
     public static function getForSeller(int $sellerId, ?string $status = null, int $page = 1, int $perPage = 20): array
     {

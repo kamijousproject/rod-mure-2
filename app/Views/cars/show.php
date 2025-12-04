@@ -17,9 +17,9 @@ if (!$primaryImage && !empty($images)) {
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/">หน้าแรก</a></li>
-                <li class="breadcrumb-item"><a href="/cars">ค้นหารถ</a></li>
-                <li class="breadcrumb-item"><a href="/cars?brand_id=<?= $car['brand_id'] ?>"><?= e($car['brand_name']) ?></a></li>
+                <li class="breadcrumb-item"><a href="<?= url('/') ?>">หน้าแรก</a></li>
+                <li class="breadcrumb-item"><a href="<?= url('/cars') ?>">ค้นหารถ</a></li>
+                <li class="breadcrumb-item"><a href="<?= url('/cars?brand_id=' . $car['brand_id']) ?>"><?= e($car['brand_name']) ?></a></li>
                 <li class="breadcrumb-item active"><?= e($car['title']) ?></li>
             </ol>
         </nav>
@@ -36,8 +36,8 @@ if (!$primaryImage && !empty($images)) {
                     <!-- Main Image -->
                     <div class="position-relative">
                         <?php if ($primaryImage): ?>
-                            <a href="<?= upload_url('cars/' . $primaryImage['image_path']) ?>" class="glightbox" data-gallery="car-gallery">
-                                <img src="<?= upload_url('cars/' . $primaryImage['image_path']) ?>" 
+                            <a href="<?= upload_url($primaryImage['image_path']) ?>" class="glightbox" data-gallery="car-gallery">
+                                <img src="<?= upload_url($primaryImage['image_path']) ?>" 
                                      class="img-fluid w-100 rounded-top" 
                                      id="main-image"
                                      style="max-height: 500px; object-fit: cover;"
@@ -58,10 +58,10 @@ if (!$primaryImage && !empty($images)) {
                     <?php if (count($images) > 1): ?>
                         <div class="d-flex gap-2 p-3 overflow-auto">
                             <?php foreach ($images as $index => $img): ?>
-                                <a href="<?= upload_url('cars/' . $img['image_path']) ?>" 
+                                <a href="<?= upload_url($img['image_path']) ?>" 
                                    class="glightbox <?= $index > 0 ? '' : '' ?>" 
                                    data-gallery="car-gallery">
-                                    <img src="<?= upload_url('cars/' . $img['image_path']) ?>" 
+                                    <img src="<?= upload_url($img['image_path']) ?>" 
                                          class="gallery-thumb rounded <?= $img['is_primary'] ? 'active border border-primary' : '' ?>"
                                          style="width: 80px; height: 60px; object-fit: cover;"
                                          onclick="document.getElementById('main-image').src = this.src"
@@ -234,7 +234,7 @@ if (!$primaryImage && !empty($images)) {
                     $errors = \App\Core\Session::getErrors();
                     ?>
                     
-                    <form action="/inquiries" method="POST">
+                    <form action="<?= url('/inquiries') ?>" method="POST">
                         <?= csrf_field() ?>
                         <input type="hidden" name="car_id" value="<?= $car['id'] ?>">
                         

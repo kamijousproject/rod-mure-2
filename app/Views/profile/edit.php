@@ -11,7 +11,7 @@
                     <h5 class="mb-0">ข้อมูลส่วนตัว</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/profile/update" method="POST">
+                    <form action="<?= url('/profile/update') ?>" method="POST">
                         <?= csrf_field() ?>
                         
                         <div class="row g-3">
@@ -61,7 +61,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-lg me-2"></i>บันทึกการเปลี่ยนแปลง
                             </button>
-                            <a href="/profile" class="btn btn-outline-secondary ms-2">ยกเลิก</a>
+                            <a href="<?= url('/profile') ?>" class="btn btn-outline-secondary ms-2">ยกเลิก</a>
                         </div>
                     </form>
                 </div>
@@ -73,7 +73,7 @@
                     <h5 class="mb-0">เปลี่ยนรหัสผ่าน</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/profile/password" method="POST">
+                    <form action="<?= url('/profile/password') ?>" method="POST">
                         <?= csrf_field() ?>
                         
                         <div class="row g-3">

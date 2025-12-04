@@ -608,6 +608,20 @@
             animation: fadeIn 0.5s ease forwards;
         }
         
+        /* Chat Messages */
+        .new-message {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #messages-container {
+            scroll-behavior: smooth;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero-section {
@@ -786,14 +800,13 @@
         
         // Helper function for fetch with CSRF
         async function fetchWithCsrf(url, options = {}) {
-            const defaultOptions = {
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Content-Type': 'application/json',
-                },
+            const headers = {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json',
+                ...(options.headers || {})
             };
             
-            return fetch(url, {...defaultOptions, ...options});
+            return fetch(url, {...options, headers});
         }
     </script>
     

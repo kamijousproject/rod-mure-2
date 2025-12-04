@@ -199,7 +199,8 @@ function upload_path(string $path = ''): string
  */
 function upload_url(string $path = ''): string
 {
-    return base_url('storage/uploads/' . ltrim($path, '/'));
+    // Use url() to include base path for subfolder installation
+    return url('/storage/' . ltrim($path, '/'));
 }
 
 /**

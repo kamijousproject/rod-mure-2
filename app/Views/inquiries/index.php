@@ -5,16 +5,16 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body py-2">
             <div class="d-flex gap-2 flex-wrap">
-                <a href="/inquiries" class="btn btn-sm <?= empty($currentStatus) ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                <a href="<?= url('/inquiries') ?>" class="btn btn-sm <?= empty($currentStatus) ? 'btn-primary' : 'btn-outline-secondary' ?>">
                     ทั้งหมด
                 </a>
-                <a href="/inquiries?status=unread" class="btn btn-sm <?= $currentStatus === 'unread' ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                <a href="<?= url('/inquiries?status=unread') ?>" class="btn btn-sm <?= $currentStatus === 'unread' ? 'btn-primary' : 'btn-outline-secondary' ?>">
                     ยังไม่อ่าน
                 </a>
-                <a href="/inquiries?status=read" class="btn btn-sm <?= $currentStatus === 'read' ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                <a href="<?= url('/inquiries?status=read') ?>" class="btn btn-sm <?= $currentStatus === 'read' ? 'btn-primary' : 'btn-outline-secondary' ?>">
                     อ่านแล้ว
                 </a>
-                <a href="/inquiries?status=replied" class="btn btn-sm <?= $currentStatus === 'replied' ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                <a href="<?= url('/inquiries?status=replied') ?>" class="btn btn-sm <?= $currentStatus === 'replied' ? 'btn-primary' : 'btn-outline-secondary' ?>">
                     ตอบแล้ว
                 </a>
             </div>
@@ -33,12 +33,12 @@
         <div class="card shadow-sm">
             <div class="list-group list-group-flush">
                 <?php foreach ($inquiries as $inquiry): ?>
-                    <a href="/inquiries/<?= $inquiry['id'] ?>" 
+                    <a href="<?= url('/inquiries/' . $inquiry['id']) ?>" 
                        class="list-group-item list-group-item-action <?= $inquiry['status'] === 'unread' ? 'bg-light' : '' ?>">
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <?php if ($inquiry['car_image']): ?>
-                                    <img src="<?= upload_url('cars/' . $inquiry['car_image']) ?>" 
+                                    <img src="<?= upload_url($inquiry['car_image']) ?>" 
                                          class="rounded" style="width: 60px; height: 45px; object-fit: cover;">
                                 <?php else: ?>
                                     <div class="bg-secondary rounded d-flex align-items-center justify-content-center" 
@@ -50,9 +50,16 @@
                             <div class="col">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
-                                        <strong><?= e($inquiry['name']) ?></strong>
-                                        <?php if ($inquiry['status'] === 'unread'): ?>
+                                        <?php $isSender = $inquiry['sender_id'] == $auth['id']; ?>
+                                        <?php if ($isSender): ?>
+                                            <span class="badge bg-info me-2">ส่งไป</span>
+                                        <?php else: ?>
+                                            <strong><?= e($inquiry['name']) ?></strong>
+                                        <?php endif; ?>
+                                        <?php if ($inquiry['status'] === 'unread' && !$isSender): ?>
                                             <span class="badge bg-primary ms-2">ใหม่</span>
+                                        <?php elseif ($inquiry['status'] === 'replied'): ?>
+                                            <span class="badge bg-success ms-2">ตอบแล้ว</span>
                                         <?php endif; ?>
                                         <br>
                                         <small class="text-muted"><?= e($inquiry['car_title']) ?></small>

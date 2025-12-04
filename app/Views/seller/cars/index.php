@@ -1,7 +1,7 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">รถของฉัน</h2>
-        <a href="/my-cars/create" class="btn btn-primary">
+        <a href="<?= url('/my-cars/create') ?>" class="btn btn-primary">
             <i class="bi bi-plus-lg me-2"></i>ลงประกาศใหม่
         </a>
     </div>
@@ -10,11 +10,11 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body py-2">
             <div class="d-flex gap-2 flex-wrap">
-                <a href="/my-cars" class="btn btn-sm <?= empty($currentStatus) ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                <a href="<?= url('/my-cars') ?>" class="btn btn-sm <?= empty($currentStatus) ? 'btn-primary' : 'btn-outline-secondary' ?>">
                     ทั้งหมด
                 </a>
                 <?php foreach ($statuses as $key => $label): ?>
-                    <a href="/my-cars?status=<?= $key ?>" class="btn btn-sm <?= $currentStatus === $key ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                    <a href="<?= url('/my-cars?status=' . $key) ?>" class="btn btn-sm <?= $currentStatus === $key ? 'btn-primary' : 'btn-outline-secondary' ?>">
                         <?= e($label) ?>
                     </a>
                 <?php endforeach; ?>
@@ -28,7 +28,7 @@
                 <i class="bi bi-car-front display-1 text-muted"></i>
                 <h4 class="mt-3">ยังไม่มีประกาศ</h4>
                 <p class="text-muted">เริ่มต้นลงประกาศขายรถของคุณวันนี้</p>
-                <a href="/my-cars/create" class="btn btn-primary">
+                <a href="<?= url('/my-cars/create') ?>" class="btn btn-primary">
                     <i class="bi bi-plus-lg me-2"></i>ลงประกาศใหม่
                 </a>
             </div>
@@ -53,7 +53,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <?php if ($car['primary_image']): ?>
-                                        <img src="<?= upload_url('cars/' . $car['primary_image']) ?>" 
+                                        <img src="<?= upload_url($car['primary_image']) ?>" 
                                              class="rounded me-3" style="width: 80px; height: 60px; object-fit: cover;">
                                     <?php else: ?>
                                         <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 60px;">
@@ -61,7 +61,7 @@
                                         </div>
                                     <?php endif; ?>
                                     <div>
-                                        <a href="/cars/<?= e($car['slug']) ?>" target="_blank" class="text-decoration-none">
+                                        <a href="<?= url('/cars/' . e($car['slug'])) ?>" target="_blank" class="text-decoration-none">
                                             <strong><?= e(str_limit($car['title'], 40)) ?></strong>
                                         </a>
                                         <br>
@@ -98,18 +98,18 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item" href="/my-cars/<?= $car['id'] ?>/edit">
+                                            <a class="dropdown-item" href="<?= url('/my-cars/' . $car['id'] . '/edit') ?>">
                                                 <i class="bi bi-pencil me-2"></i>แก้ไข
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="/cars/<?= e($car['slug']) ?>" target="_blank">
+                                            <a class="dropdown-item" href="<?= url('/cars/' . e($car['slug'])) ?>" target="_blank">
                                                 <i class="bi bi-eye me-2"></i>ดูประกาศ
                                             </a>
                                         </li>
                                         <?php if ($car['status'] === 'published'): ?>
                                         <li>
-                                            <form action="/my-cars/<?= $car['id'] ?>/status" method="POST" class="d-inline">
+                                            <form action="<?= url('/my-cars/' . $car['id'] . '/status') ?>" method="POST" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="status" value="sold">
                                                 <button type="submit" class="dropdown-item text-success">
@@ -120,7 +120,7 @@
                                         <?php endif; ?>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <form action="/my-cars/<?= $car['id'] ?>/delete" method="POST" 
+                                            <form action="<?= url('/my-cars/' . $car['id'] . '/delete') ?>" method="POST" 
                                                   onsubmit="return confirm('ยืนยันการลบประกาศนี้?')">
                                                 <?= csrf_field() ?>
                                                 <button type="submit" class="dropdown-item text-danger">

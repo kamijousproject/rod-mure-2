@@ -27,6 +27,7 @@ class CarController extends BaseController
     {
         $status = $this->input('status');
         $search = $this->input('q');
+        $brandId = $this->input('brand_id');
         $page = (int)$this->input('page', 1);
         
         $conditions = [];
@@ -43,6 +44,11 @@ class CarController extends BaseController
             $params[] = "%{$search}%";
         }
         
+        if ($brandId) {
+            $conditions[] = "brand_id = ?";
+            $params[] = $brandId;
+        }
+        
         $where = !empty($conditions) ? implode(' AND ', $conditions) : '';
         
         $result = Car::paginate($page, 20, $where, $params, 'created_at DESC');
@@ -53,6 +59,7 @@ class CarController extends BaseController
             'pagination' => $result,
             'currentStatus' => $status,
             'search' => $search,
+            'brandId' => $brandId,
             'statuses' => Car::STATUSES,
         ]);
     }

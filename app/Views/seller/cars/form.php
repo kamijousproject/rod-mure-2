@@ -6,15 +6,15 @@ $errors = \App\Core\Session::getErrors();
 <div class="container py-4">
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/dashboard">แดชบอร์ด</a></li>
-            <li class="breadcrumb-item"><a href="/my-cars">รถของฉัน</a></li>
+            <li class="breadcrumb-item"><a href="<?= url('/dashboard') ?>">แดชบอร์ด</a></li>
+            <li class="breadcrumb-item"><a href="<?= url('/my-cars') ?>">รถของฉัน</a></li>
             <li class="breadcrumb-item active"><?= $isEdit ? 'แก้ไขประกาศ' : 'ลงประกาศใหม่' ?></li>
         </ol>
     </nav>
     
     <h2 class="mb-4"><?= $isEdit ? 'แก้ไขประกาศ' : 'ลงประกาศขายรถ' ?></h2>
     
-    <form action="<?= $isEdit ? '/my-cars/' . $car['id'] : '/my-cars' ?>" method="POST" enctype="multipart/form-data" id="car-form">
+    <form action="<?= $isEdit ? url('/my-cars/' . $car['id']) : url('/my-cars') ?>" method="POST" enctype="multipart/form-data" id="car-form">
         <?= csrf_field() ?>
         <input type="hidden" name="deleted_images" id="deleted-images" value="">
         <input type="hidden" name="new_images" id="new-images" value="">
@@ -160,7 +160,7 @@ $errors = \App\Core\Session::getErrors();
                             <?php foreach ($images as $image): ?>
                                 <div class="col-6 col-md-3 image-item" data-id="<?= $image['id'] ?>">
                                     <div class="position-relative">
-                                        <img src="<?= upload_url('cars/' . $image['image_path']) ?>" class="img-fluid rounded">
+                                        <img src="<?= upload_url($image['image_path']) ?>" class="img-fluid rounded">
                                         <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 btn-delete-image">
                                             <i class="bi bi-x"></i>
                                         </button>
@@ -216,7 +216,7 @@ $errors = \App\Core\Session::getErrors();
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="bi bi-check-lg me-2"></i><?= $isEdit ? 'บันทึกการแก้ไข' : 'ลงประกาศ' ?>
                             </button>
-                            <a href="/my-cars" class="btn btn-outline-secondary">ยกเลิก</a>
+                            <a href="<?= url('/my-cars') ?>" class="btn btn-outline-secondary">ยกเลิก</a>
                         </div>
                     </div>
                 </div>
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modelSelect.innerHTML = '<option value="">-- เลือกรุ่น --</option>';
         
         if (brandId) {
-            const response = await fetch('/api/models?brand_id=' + brandId);
+            const response = await fetch('<?= url('/api/models') ?>?brand_id=' + brandId);
             const data = await response.json();
             
             if (data.success) {
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('_csrf_token', csrfToken);
         
         try {
-            const response = await fetch('/upload/image', {
+            const response = await fetch('<?= url('/upload/image') ?>', {
                 method: 'POST',
                 body: formData
             });

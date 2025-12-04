@@ -1,12 +1,20 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">จัดการประกาศ</h2>
+        <h2 class="mb-0">
+            จัดการประกาศ
+            <?php if (!empty($brandId)): ?>
+                <span class="badge bg-primary fs-6">กรองตามยี่ห้อ</span>
+            <?php endif; ?>
+        </h2>
     </div>
     
     <!-- Filters -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <form action="/admin/cars" method="GET" class="row g-3 align-items-end">
+            <form action="<?= url('/admin/cars') ?>" method="GET" class="row g-3 align-items-end">
+                <?php if (!empty($brandId)): ?>
+                    <input type="hidden" name="brand_id" value="<?= e($brandId) ?>">
+                <?php endif; ?>
                 <div class="col-md-4">
                     <label class="form-label">ค้นหา</label>
                     <input type="text" name="q" class="form-control" placeholder="ค้นหาหัวข้อ..." value="<?= e($search ?? '') ?>">
@@ -24,7 +32,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-search"></i> ค้นหา
                     </button>
-                    <a href="/admin/cars" class="btn btn-outline-secondary">ล้าง</a>
+                    <a href="<?= url('/admin/cars') ?>" class="btn btn-outline-secondary">ล้าง</a>
                 </div>
             </form>
         </div>
@@ -66,7 +74,7 @@
                             </span>
                         </td>
                         <td>
-                            <form action="/admin/cars/<?= $car['id'] ?>/feature" method="POST" class="d-inline feature-form">
+                            <form action="<?= url('/admin/cars/' . $car['id'] . '/feature') ?>" method="POST" class="d-inline feature-form">
                                 <?= csrf_field() ?>
                                 <button type="submit" class="btn btn-sm btn-<?= $car['is_featured'] ? 'warning' : 'outline-secondary' ?>">
                                     <i class="bi bi-star<?= $car['is_featured'] ? '-fill' : '' ?>"></i>
@@ -77,24 +85,24 @@
                         <td><small><?= format_date($car['created_at'], 'd M Y') ?></small></td>
                         <td class="text-end">
                             <div class="btn-group">
-                                <a href="/admin/cars/<?= $car['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                <a href="<?= url('/admin/cars/' . $car['id']) ?>" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 <?php if ($car['status'] === 'pending'): ?>
-                                    <form action="/admin/cars/<?= $car['id'] ?>/approve" method="POST" class="d-inline">
+                                    <form action="<?= url('/admin/cars/' . $car['id'] . '/approve') ?>" method="POST" class="d-inline">
                                         <?= csrf_field() ?>
                                         <button type="submit" class="btn btn-sm btn-success" title="อนุมัติ">
                                             <i class="bi bi-check-lg"></i>
                                         </button>
                                     </form>
-                                    <form action="/admin/cars/<?= $car['id'] ?>/reject" method="POST" class="d-inline">
+                                    <form action="<?= url('/admin/cars/' . $car['id'] . '/reject') ?>" method="POST" class="d-inline">
                                         <?= csrf_field() ?>
                                         <button type="submit" class="btn btn-sm btn-danger" title="ปฏิเสธ">
                                             <i class="bi bi-x-lg"></i>
                                         </button>
                                     </form>
                                 <?php endif; ?>
-                                <form action="/admin/cars/<?= $car['id'] ?>/delete" method="POST" class="d-inline" 
+                                <form action="<?= url('/admin/cars/' . $car['id'] . '/delete') ?>" method="POST" class="d-inline" 
                                       onsubmit="return confirm('ยืนยันการลบ?')">
                                     <?= csrf_field() ?>
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="ลบ">
@@ -116,7 +124,7 @@
             <ul class="pagination justify-content-center">
                 <?php for ($i = 1; $i <= $pagination['total_pages']; $i++): ?>
                     <li class="page-item <?= $i == $pagination['page'] ? 'active' : '' ?>">
-                        <a class="page-link" href="?page=<?= $i ?>&status=<?= $currentStatus ?? '' ?>&q=<?= e($search ?? '') ?>"><?= $i ?></a>
+                        <a class="page-link" href="?page=<?= $i ?>&status=<?= $currentStatus ?? '' ?>&q=<?= e($search ?? '') ?>&brand_id=<?= e($brandId ?? '') ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             </ul>

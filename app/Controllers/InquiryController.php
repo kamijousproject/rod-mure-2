@@ -25,7 +25,7 @@ class InquiryController extends BaseController
         $status = $this->input('status');
         $page = (int)$this->input('page', 1);
         
-        $result = Inquiry::getForSeller(Auth::id(), $status, $page, 15);
+        $result = Inquiry::getForUser(Auth::id(), $status, $page, 15);
         
         $this->view('inquiries.index', [
             'title' => 'ข้อความสอบถาม',
@@ -132,12 +132,16 @@ class InquiryController extends BaseController
         
         if (!$inquiry || ($inquiry['sender_id'] != Auth::id() && $inquiry['receiver_id'] != Auth::id())) {
             $this->json(['success' => false, 'message' => 'ไม่พบข้อความ'], 404);
+            return;
         }
         
-        $message = trim($this->input('message'));
+        // Handle JSON body from AJAX
+        $jsonInput = json_decode(file_get_contents('php://input'), true) ?? [];
+        $message = trim($jsonInput['message'] ?? $this->input('message') ?? '');
         
         if (empty($message)) {
             $this->json(['success' => false, 'message' => 'กรุณากรอกข้อความ'], 400);
+            return;
         }
         
         $messageId = Message::addReply((int)$id, Auth::id(), $message);

@@ -129,6 +129,7 @@ $router->get('/api/cars', 'Api\CarController@index', 'api.cars');
 $router->get('/api/cars/{id}', 'Api\CarController@show', 'api.cars.show');
 $router->get('/api/brands', 'Api\BrandController@index', 'api.brands');
 $router->get('/api/models', 'Api\ModelController@index', 'api.models');
+$router->get('/api/inquiries/{id}/messages', 'Api\InquiryController@messages', 'api.inquiries.messages');
 
 // Authenticated API
 $router->post('/api/auth/login', 'Api\AuthController@login', 'api.auth.login');

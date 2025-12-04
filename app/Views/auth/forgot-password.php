@@ -11,7 +11,7 @@
                     
                     <?php $errors = \App\Core\Session::getErrors(); ?>
                     
-                    <form action="/forgot-password" method="POST">
+                    <form action="<?= url('/forgot-password') ?>" method="POST">
                         <?= csrf_field() ?>
                         
                         <div class="mb-4">
@@ -29,7 +29,7 @@
                     </form>
                     
                     <p class="text-center mb-0">
-                        <a href="/login" class="text-decoration-none">
+                        <a href="<?= url('/login') ?>" class="text-decoration-none">
                             <i class="bi bi-arrow-left"></i> กลับไปหน้าเข้าสู่ระบบ
                         </a>
                     </p>

@@ -5,7 +5,7 @@
  */
 
 $imageUrl = !empty($car['primary_image']) 
-    ? upload_url('cars/' . $car['primary_image']) 
+    ? upload_url($car['primary_image']) 
     : 'https://placehold.co/400x300/f1f5f9/94a3b8?text=No+Image';
 ?>
 
